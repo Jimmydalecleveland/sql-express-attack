@@ -1,8 +1,10 @@
 const express = require('express')
+const cors = require('cors')
 const db = require('./db')
 const app = express()
 const port = 3000
 
+app.use(cors())
  
 app.get('/players', (req, res) => {
   db.query('SELECT * FROM player', function (error, results, fields) {
