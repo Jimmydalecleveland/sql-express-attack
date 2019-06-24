@@ -42,7 +42,11 @@ function slugify(str) {
 }
 
 function handleRaceClick(event) {
-  state.chosenRace = event.target.dataset.raceId;
+  if (event.target.parentElement.classList.contains('race-button')) {
+    state.chosenRace = event.target.parentElement.dataset.raceId;
+  } else {
+    state.chosenRace = event.target.dataset.raceId;
+  }
 }
 
 attackRollBtn.disabled = true;
