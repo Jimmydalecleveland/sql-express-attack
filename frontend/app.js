@@ -25,7 +25,7 @@ fetch('http://localhost:3000/races')
       const imageSlug = slugify(state.races[id].name);
       raceButton.dataset.raceId = id;
       raceButton.classList.add('race-button', imageSlug);
-      raceButton.innerHTML = `<img src="${imageSlug}.svg" />`;
+      raceButton.innerHTML = `<img src="images/${imageSlug}.svg" />`;
       raceButton.addEventListener('click', handleRaceClick);
       raceSelections.appendChild(raceButton);
     });
