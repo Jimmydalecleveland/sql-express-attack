@@ -1,6 +1,6 @@
 const state = {};
 // TODO: look up why we can't store this fetch in a variable
-fetch('http://fe6596bb.ngrok.io/players')
+fetch('https://fe6596bb.ngrok.io/players')
   .then(res => res.json())
   .then(playerJson => {
     console.log(playerJson);
@@ -9,7 +9,7 @@ fetch('http://fe6596bb.ngrok.io/players')
     state.playerData = playerJson[0];
   });
 
-fetch('http://fe6596bb.ngrok.io/races')
+fetch('https://fe6596bb.ngrok.io/races')
   .then(res => res.json())
   .then(raceJson => {
     state.chosenRace = raceJson[0].id;
