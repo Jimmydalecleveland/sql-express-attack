@@ -31,7 +31,7 @@ fetch('https://fe6596bb.ngrok.io/races')
     });
 
 
-    attackRollBtn.disabled = true;
+    attackRollBtn.disabled = false;
   });
 
 const playerName = document.querySelector('#playerName');
