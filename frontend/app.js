@@ -66,7 +66,7 @@ function attackRoll() {
     (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2
   );
   // rollResult.textContent = diceRoll() + strBonus;
-  rollResult.textContent = strBonus;
+  rollResult.textContent = diceRoll() + strBonus;
 }
 
 attackRollBtn.addEventListener('click', attackRoll);
