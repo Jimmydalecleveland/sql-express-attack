@@ -3,7 +3,7 @@ const state = {};
 fetch('https://add3a9ff.ngrok.io/players')
   .then(res => res.json())
   .then(playerJson => {
-    console.log(playerJson);
+    console.log('Player JSON', playerJson);
     playerName.textContent = playerJson[0].name;
     playerStr.textContent = playerJson[0].str;
     state.playerData = playerJson[0];
