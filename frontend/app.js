@@ -29,6 +29,9 @@ fetch('https://add3a9ff.ngrok.io/races')
       raceButton.addEventListener('click', handleRaceClick);
       raceSelections.appendChild(raceButton);
     });
+
+
+    attackRollBtn.disabled = false;
   });
 
 const playerName = document.querySelector('#playerName');
