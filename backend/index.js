@@ -6,37 +6,21 @@ const port = 3000;
 
 app.use(cors());
 
-app.get('/players', (req, res) => {
-  db.query('SELECT * FROM player', function(error, results, fields) {
-    if (error) throw error;
-
-    res.json(results);
-  });
-});
-
-app.get('/players/:id', (req, res) => {
-  db.query('SELECT * FROM player WHERE id = ?', req.params.id, function(
-    error,
-    results,
-    fields
-  ) {
-    if (error) throw error;
-
-    res.json(results);
-  });
-});
+app.get('/', (req, res) => {
+  req.send('Welcome to attack roll. Hit the /races endpoint for some data')
+})
 
 app.get('/races', (req, res) => {
-  db.query('SELECT * FROM race', function(error, results, fields) {
+  db.query('SELECT * FROM race', (error, results, fields) => {
     if (error) throw error;
 
     res.json(results);
   });
 });
 
-app.post('/create-races', (req, res) => {
+app.post('/create-race', (req, res) => {
   const newRace = { name: 'Elf', strBonus: 0, dexBonus: 2 };
-  db.query('INSERT INTO race SET ?', newRace, function(err, rows, fields) {
+  db.query('INSERT INTO race SET ?', newRace, (err, rows, fields) => {
     if (err) throw err;
 
     res.json(rows);
@@ -44,12 +28,11 @@ app.post('/create-races', (req, res) => {
 });
 
 app.delete('/delete-race/:id', (req, res) => {
-  db.query('DELETE FROM race WHERE id = ?', req.params.id, function(
-    err,
+  db.query('DELETE FROM race WHERE id = ?', req.params.id, (
+    error,
     rows,
-    fields
-  ) {
-    if (err) throw err;
+  ) => {
+    if (error) throw error;
 
     res.json(rows);
   });

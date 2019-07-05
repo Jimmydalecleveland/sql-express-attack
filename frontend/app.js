@@ -1,17 +1,14 @@
-const state = {};
-// TODO: look up why we can't store this fetch in a variable
-fetch('https://add3a9ff.ngrok.io/players')
-  .then(res => res.json())
-  .then(playerJson => {
-    console.log('Player JSON', playerJson);
-    playerName.textContent = playerJson[0].name;
-    playerStr.textContent = playerJson[0].str;
-    state.playerData = playerJson[0];
-  });
+const state = {
+  playerData: {
+    str: 17
+  }
+};
 
+// TODO: look up why we can't store this fetch in a variable
 fetch('https://add3a9ff.ngrok.io/races')
   .then(res => res.json())
   .then(raceJson => {
+    console.log('%cRace JSON: ', 'color: cornflowerblue;', raceJson)
     state.chosenRace = raceJson[0].id;
     state.races = raceJson.reduce((stateRaces, currentRace) => {
       const { id, ...rest } = currentRace;
@@ -61,7 +58,7 @@ function diceRoll() {
 
 // Displaying the dice roll to the DOM
 function attackRoll() {
-  if (state.playerData === 'undefined') return;
+  if (state.races === 'undefined') return;
   const strBonus = Math.floor(
     (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2
   );
