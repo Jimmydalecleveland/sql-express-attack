@@ -7,8 +7,8 @@ const port = 3000;
 app.use(cors());
 
 app.get('/', (req, res) => {
-  req.send('Welcome to attack roll. Hit the /races endpoint for some data')
-})
+  res.send('Welcome to attack roll. Hit the /races endpoint for some data');
+});
 
 app.get('/races', (req, res) => {
   db.query('SELECT * FROM race', (error, results, fields) => {
@@ -28,10 +28,7 @@ app.post('/create-race', (req, res) => {
 });
 
 app.delete('/delete-race/:id', (req, res) => {
-  db.query('DELETE FROM race WHERE id = ?', req.params.id, (
-    error,
-    rows,
-  ) => {
+  db.query('DELETE FROM race WHERE id = ?', req.params.id, (error, rows) => {
     if (error) throw error;
 
     res.json(rows);
