@@ -4,6 +4,7 @@ const db = require('./db');
 const app = express();
 const port = process.env.NODE_ENV === 'development' ? 3000 : 80;
 
+// Adding a comment for discord webhook test
 app.use(cors());
 
 app.get('/', (req, res) => {
