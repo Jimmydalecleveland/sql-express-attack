@@ -4,6 +4,7 @@ const db = require('./db');
 const app = express();
 const port = 80;
 
+// DEPLOY TEST
 app.use(cors());
 
 app.get('/', (req, res) => {
