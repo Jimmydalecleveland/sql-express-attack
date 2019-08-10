@@ -25,7 +25,7 @@ module.exports = {
       host: '165.22.155.59',
       ref: 'origin/master',
       repo: 'git@github.com:Jimmydalecleveland/sql-express-attack.git',
-      path: '/root/app/backend',
+      path: '/root/app/backend/',
       'post-deploy':
         'npm install && pm2 reload ecosystem.config.js --env production',
     },
