@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'Attack Roll API',
-      script: 'backend/index.js',
+      script: 'index.js',
 
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: 'one two',
