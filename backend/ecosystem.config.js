@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'Attack Roll API',
-      script: 'index.js',
+      script: 'backend/index.js',
 
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: 'one two',
@@ -25,7 +25,7 @@ module.exports = {
       host: '165.22.155.59',
       ref: 'origin/master',
       repo: 'git@github.com:Jimmydalecleveland/sql-express-attack.git',
-      path: '/root/app/backend/',
+      path: '/root/app',
       'post-deploy':
         'npm install && pm2 reload ecosystem.config.js --env production',
     },
