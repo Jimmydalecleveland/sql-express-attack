@@ -5,10 +5,9 @@ const state = {
 };
 
 // TODO: look up why we can't store this fetch in a variable
-fetch('https://add3a9ff.ngrok.io/races')
+fetch('http://localhost:80/races')
   .then(res => res.json())
   .then(raceJson => {
-    console.log('%cRace JSON: ', 'color: cornflowerblue;', raceJson)
     state.chosenRace = raceJson[0].id;
     state.races = raceJson.reduce((stateRaces, currentRace) => {
       const { id, ...rest } = currentRace;
@@ -26,7 +25,6 @@ fetch('https://add3a9ff.ngrok.io/races')
       raceButton.addEventListener('click', handleRaceClick);
       raceSelections.appendChild(raceButton);
     });
-
 
     attackRollBtn.disabled = false;
   });

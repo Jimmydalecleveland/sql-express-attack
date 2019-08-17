@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles/race.css">
+  <title>Race</title>
+</head>
+<body>
+  <form method="POST" action="http://localhost:80/create-race/">
+    <label for="race">Race</label>
+    <input type="text" name="race">
+    <label for="strBonus">Strength Bonus</label> 
+    <input type="text" name="strBonus">
+    <label for="dexBonus">Dexterity Bonus</label>
+    <input type="text" name="dexBonus">
+    <input type="submit" value="submit" class="submit">
+  </form>
+</body>
+</html>
