@@ -1,43 +1,36 @@
+function createOptions(weaponName, weaponGroup) {
+  const weaponOption = document.createElement('option');
+  weaponOption.innerHTML = `<option>${weaponName}</option>`;
+  weaponSelect.appendChild(weaponGroup).appendChild(weaponOption);
+}
+
 fetch('http://localhost:80/weapons')
-.then(res => res.json())
-.then(weapon => {
-  const simpleMeleeWeaponsGroup = document.createElement('optgroup');
-  simpleMeleeWeaponsGroup.label = 'Simple melee weapons';
- 
-  const simpleRangedWeaponsGroup = document.createElement('optgroup');
-  simpleRangedWeaponsGroup.label = 'Simple ranged weapons';
+  .then(res => res.json())
+  .then(weapons => {
+    // Create option groups for each weapon type
+    const simpleMeleeWeaponsGroup = document.createElement('optgroup');
+    simpleMeleeWeaponsGroup.label = 'Simple melee weapons';
 
-  const martialMeleeWeaponsGroup = document.createElement('optgroup');
-  martialMeleeWeaponsGroup.label = 'Martial melee weapons'
+    const simpleRangedWeaponsGroup = document.createElement('optgroup');
+    simpleRangedWeaponsGroup.label = 'Simple ranged weapons';
 
-  const martialRangedWeaponsGroup = document.createElement('optgroup');
-  martialRangedWeaponsGroup.label = 'Martial ranged weapons'
+    const martialMeleeWeaponsGroup = document.createElement('optgroup');
+    martialMeleeWeaponsGroup.label = 'Martial melee weapons';
 
-  weapon.forEach(element => {
-    const simpleMeleeWeapons = document.createElement('option')
-    
-    if(element.weaponGroup == 'simple melee weapons') {
-      simpleMeleeWeapons.innerHTML = `<option>${element.name}</option>`
-      weaponSelect.appendChild(simpleMeleeWeaponsGroup).appendChild(simpleMeleeWeapons)
-    
-    } else if (element.weaponGroup === 'simple ranged weapons') {
-    
-      const simpleRangedWeapons = document.createElement('option')
-      simpleRangedWeapons.innerHTML = `<option>${element.name}</option>`
-      weaponSelect.appendChild(simpleRangedWeaponsGroup).appendChild(simpleRangedWeapons)
-    
-    } else if (element.weaponGroup === 'martial melee weapons') {
-    
-      const martialMeleeWeapons = document.createElement('option');
-      martialMeleeWeapons.innerHTML = `<option>${element.name}</option>` 
-      weaponSelect.appendChild(martialMeleeWeaponsGroup).appendChild(martialMeleeWeapons)
-    } else if (element.weaponGroup === 'martial ranged weapons'){
-      
-      const martialRangedWeapons = document.createElement('option');
-      martialRangedWeapons.innerHTML = `<option>${element.name}</option>`
-      weaponSelect.appendChild(martialRangedWeaponsGroup).appendChild(martialRangedWeapons)
-    }
+    const martialRangedWeaponsGroup = document.createElement('optgroup');
+    martialRangedWeaponsGroup.label = 'Martial ranged weapons';
+
+    weapons.forEach(weapon => {
+      if (weapon.weaponGroup === 'simple melee weapons') {
+        createOptions(weapon.name, simpleMeleeWeaponsGroup);
+      } else if (weapon.weaponGroup === 'simple ranged weapons') {
+        createOptions(weapon.name, simpleRangedWeaponsGroup);
+      } else if (weapon.weaponGroup === 'martial melee weapons') {
+        createOptions(weapon.name, martialMeleeWeaponsGroup);
+      } else if (weapon.weaponGroup === 'martial ranged weapons') {
+        createOptions(weapon.name, martialRangedWeaponsGroup);
+      }
+    });
   });
-})  
 
-let weaponSelect = document.querySelector('#weapon-select')
+const weaponSelect = document.querySelector('#weapon-select');
