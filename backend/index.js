@@ -4,7 +4,6 @@ const db = require('./db');
 const app = express();
 const port = process.env.NODE_ENV === 'development' ? 3000 : 80;
 app.use(express.urlencoded())
-// import data from '../frontend/race'
 
 // DEPLOY TEST
 app.use(cors());
