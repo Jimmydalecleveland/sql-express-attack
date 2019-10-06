@@ -9,10 +9,20 @@ app.use(express.urlencoded())
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Welcome to attack roll. Hit the /races endpoint for some data')
+  res.send(
+    'Welcome to attack roll. Hit the /races endpoint for some data. It will be neat, maybe.'
+  )
 })
 
 app.get('/races', (req, res) => {
+  db.query('SELECT * FROM race', (error, results, fields) => {
+    if (error) throw error
+
+    res.json(results)
+  })
+})
+
+app.get('/races/human', (req, res) => {
   db.query('SELECT * FROM race', (error, results, fields) => {
     if (error) throw error
 
