@@ -1,8 +1,14 @@
+const fs = require('fs')
 const express = require('express')
+const https = require('https')
 const cors = require('cors')
 const db = require('./db')
 const app = express()
-const port = process.env.NODE_ENV === 'development' ? 3000 : 80
+const port = process.env.NODE_ENV === 'development' ? 3000 : 443
+
+const key = fs.readFileSync('/etc/letsencrypt/live/www.rpgattackroll.com/privkey.pem', 'utf8')
+const cert = fs.readFileSync('/etc/letsencrypt/live/www.rpgattackroll.com/fullchain.pem', 'utf8')
+
 app.use(express.urlencoded())
 
 // DEPLOY TEST
@@ -70,6 +76,9 @@ app.delete('/delete-race/:id', (req, res) => {
   })
 })
 
-app.listen(port, () =>
-  console.log(`RPG ATTACK ROLL SIMULATOR on port ${port}!`)
-)
+const httpsServer = https.createServer({key, cert}, app)
+httpsServer.listen(port)
+
+//app.listen(port, () =>
+//  console.log(`RPG ATTACK ROLL SIMULATOR on port ${port}!`)
+//)
