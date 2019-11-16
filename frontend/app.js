@@ -29,11 +29,13 @@ fetch('https://www.rpgattackroll.com/races')
     attackRollBtn.disabled = false
   })
 
-const playerName = document.querySelector('#playerName')
-const attackRollBtn = document.querySelector('#attackRollBtn')
-const playerStr = document.querySelector('#playerStr')
-const rollResult = document.querySelector('#rollResult')
-const raceSelections = document.querySelector('#raceSelections')
+const playerName = document.querySelector('#playerName');
+const attackRollBtn = document.querySelector('#attackRollBtn');
+const playerStr = document.querySelector('#playerStr');
+const playerDex = document.querySelector('#playerDex');
+const rollResult = document.querySelector('#rollResult');
+const raceSelections = document.querySelector('#raceSelections');
+playerName.textContent = "HUMAN";
 
 function slugify(str) {
   return str.toLowerCase().replace(' ', '-')
@@ -69,6 +71,8 @@ raceSelections.addEventListener('click', function(e) {
     return  
   } else {
     playerName.textContent = e.target.parentElement.classList[1]
+    playerStr.textContent = state.races[state.chosenRace].strBonus
+    playerDex.textContent = state.races[state.chosenRace].dexBonus
     }
   })
   
