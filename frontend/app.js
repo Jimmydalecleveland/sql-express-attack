@@ -64,4 +64,13 @@ function attackRoll() {
   rollResult.textContent = diceRoll() + strBonus
 }
 
+raceSelections.addEventListener('click', function(e) {
+  if(e.target.classList.contains('race-button-group') || e.target.classList.contains('race-button')) {
+    return  
+  } else {
+    playerName.textContent = e.target.parentElement.classList[1]
+    }
+  })
+  
+
 attackRollBtn.addEventListener('click', attackRoll)
