@@ -4,7 +4,7 @@ function createOptions(weaponName, weaponGroup) {
   weaponSelect.appendChild(weaponGroup).appendChild(weaponOption);
 }
 
-fetch('http://localhost:80/weapons')
+fetch('https://www.rpgattackroll.com/weapons')
   .then(res => res.json())
   .then(weapons => {
     // Create option groups for each weapon type
@@ -21,13 +21,13 @@ fetch('http://localhost:80/weapons')
     martialRangedWeaponsGroup.label = 'Martial ranged weapons';
 
     weapons.forEach(weapon => {
-      if (weapon.weaponGroup === 'simple melee weapons') {
+      if (weapon.weaponGroup === 'Simple Melee Weapons') {
         createOptions(weapon.name, simpleMeleeWeaponsGroup);
-      } else if (weapon.weaponGroup === 'simple ranged weapons') {
+      } else if (weapon.weaponGroup === 'Simple Ranged Weapons') {
         createOptions(weapon.name, simpleRangedWeaponsGroup);
-      } else if (weapon.weaponGroup === 'martial melee weapons') {
+      } else if (weapon.weaponGroup === 'Martial Melee Weapons') {
         createOptions(weapon.name, martialMeleeWeaponsGroup);
-      } else if (weapon.weaponGroup === 'martial ranged weapons') {
+      } else if (weapon.weaponGroup === 'Martial Ranged Weapons') {
         createOptions(weapon.name, martialRangedWeaponsGroup);
       }
     });
