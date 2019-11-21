@@ -18,16 +18,15 @@ const cert = fs.readFileSync(
 
 app.use(express.urlencoded());
 
-// DEPLOY TEST
 app.use(cors());
 
-app.get("*", req => {
-  response.redirect(301, "https://" + req.headers.host + req.url);
-});
+// app.get("*", req => {
+//   response.redirect(301, "https://" + req.headers.host + req.url);
+// });
 
 app.get("/", (req, res) => {
   res.send(
-    "Welcome to attack roll. Hit the /races endpoint for some data. It will be neat, maybe."
+    "Welcome to the secure attack roll. Hit the /races endpoint for some data. It will be neat, maybe."
   );
 });
 
@@ -88,5 +87,6 @@ app.delete("/delete-race/:id", (req, res) => {
 });
 
 const httpsServer = https.createServer({ key, cert }, app);
-const httpServer = http.createServer(app).listen(80);
+// const httpServer = http.createServer(app);
 httpsServer.listen(port);
+// httpServer.listen(80);
