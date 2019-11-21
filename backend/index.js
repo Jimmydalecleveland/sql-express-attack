@@ -20,10 +20,12 @@ app.use(express.urlencoded());
 
 app.use(cors());
 
-app.get("*", (req, res) => {
+app.get("*", (req, res, next) => {
   if (req.protocol === "http") {
     res.redirect(301, "https://" + req.headers.host + req.url);
   }
+
+  next();
 });
 
 app.get("/", (req, res) => {
