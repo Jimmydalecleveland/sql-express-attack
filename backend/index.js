@@ -21,6 +21,8 @@ app.use(express.urlencoded());
 app.use(cors());
 
 app.get("*", (req, res, next) => {
+  // TODO: try secure
+  // if(!req.secure){
   if (req.protocol === "http") {
     res.redirect(301, "https://" + req.headers.host + req.url);
   }
