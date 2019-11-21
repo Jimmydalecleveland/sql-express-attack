@@ -21,7 +21,9 @@ app.use(express.urlencoded());
 app.use(cors());
 
 app.get("*", (req, res) => {
-  res.redirect(301, "https://" + req.headers.host + req.url);
+  if (request.protocol === "http") {
+    res.redirect(301, "https://" + req.headers.host + req.url);
+  }
 });
 
 app.get("/", (req, res) => {
