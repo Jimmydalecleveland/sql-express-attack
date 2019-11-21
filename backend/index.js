@@ -20,9 +20,9 @@ app.use(express.urlencoded());
 
 app.use(cors());
 
-// app.get("*", req => {
-//   response.redirect(301, "https://" + req.headers.host + req.url);
-// });
+app.get("*", req => {
+  response.redirect(301, "https://" + req.headers.host + req.url);
+});
 
 app.get("/", (req, res) => {
   res.send(
@@ -87,6 +87,6 @@ app.delete("/delete-race/:id", (req, res) => {
 });
 
 const httpsServer = https.createServer({ key, cert }, app);
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 httpsServer.listen(port);
-// httpServer.listen(80);
+httpServer.listen(80);
