@@ -20,9 +20,9 @@ app.use(express.urlencoded());
 
 app.use(cors());
 
-app.get("*", req => {
-  response.redirect(301, "https://" + req.headers.host + req.url);
-});
+// app.get("*", req => {
+//   response.redirect(301, "https://" + req.headers.host + req.url);
+// });
 
 app.get("/", (req, res) => {
   res.send(
