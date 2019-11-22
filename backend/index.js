@@ -8,11 +8,11 @@ const app = express();
 const port = process.env.NODE_ENV === "development" ? 3000 : 443;
 
 const key = fs.readFileSync(
-  "/etc/letsencrypt/live/www.rpgattackroll.com/privkey.pem",
+  "/etc/letsencrypt/live/backend.rpgattackroll.com/privkey.pem",
   "utf8"
 );
 const cert = fs.readFileSync(
-  "/etc/letsencrypt/live/www.rpgattackroll.com/fullchain.pem",
+  "/etc/letsencrypt/live/backend.rpgattackroll.com/fullchain.pem",
   "utf8"
 );
 
