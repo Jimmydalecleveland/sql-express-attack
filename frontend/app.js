@@ -5,7 +5,7 @@ const state = {
 }
 
 // TODO: look up why we can't store this fetch in a variable
-fetch('https://www.rpgattackroll.com/races')
+fetch('https://backend.rpgattackroll.com/races')
   .then(res => res.json())
   .then(raceJson => {
     state.chosenRace = raceJson[0].id
