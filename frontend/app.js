@@ -99,7 +99,6 @@ raceSelections.addEventListener('click', function(e) {
         bonusStrength.textContent = 0;
         attackRollBtn.disabled = false
       } else if (Number.isInteger(strengthBonus) === false){
-        console.log('working')
         attackRollBtn.disabled = true;
         bonusStrength.textContent = 0;
       } else {
