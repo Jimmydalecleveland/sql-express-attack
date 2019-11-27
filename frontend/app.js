@@ -1,6 +1,6 @@
 const state = {
   playerData: {
-    str: 17,
+    str: 17
   },
 }
 
@@ -35,6 +35,11 @@ const playerStr = document.querySelector('#playerStr');
 const playerDex = document.querySelector('#playerDex');
 const rollResult = document.querySelector('#rollResult');
 const raceSelections = document.querySelector('#raceSelections');
+const inputStrength = document.querySelector('.input-strength');
+const bonusStrength = document.querySelector('#bonusStr');
+const totalResult = document.querySelector('#totalResult');
+let dice;
+
 playerName.textContent = "HUMAN";
 
 function slugify(str) {
@@ -53,17 +58,20 @@ attackRollBtn.disabled = true
 
 // we need our dice to roll a number between 1-20;
 function diceRoll() {
-  return Math.floor(Math.random() * 20) + 1
+  return dice = Math.floor(Math.random() * 20) + 1
 }
 
 // Displaying the dice roll to the DOM
 function attackRoll() {
   if (state.races === 'undefined') return
-  const strBonus = Math.floor(
-    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2
-  )
-  // rollResult.textContent = diceRoll() + strBonus;
-  rollResult.textContent = diceRoll() + strBonus
+  let strengthBonus = Math.floor(
+    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)  
+    if(strengthBonus < 0) {
+      strengthBonus = 0;
+    }
+    diceRoll()
+  rollResult.innerHTML = `<h3>Roll: ${dice}</h3> `;
+  totalResult.innerHTML = `<h3>Total Roll: ${dice + strengthBonus}</h3>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -76,7 +84,19 @@ raceSelections.addEventListener('click', function(e) {
     }
   })
   
-
+  
+  function calculateBonuses() {
+    state.playerData.str = parseInt(inputStrength.value)
+    const strengthBonus = Math.floor( 
+      (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
+      if(strengthBonus <= 0  || strengthBonus === NaN) {
+        bonusStrength.textContent = 0;
+      } else {
+        bonusStrength.textContent = strengthBonus 
+      }
+    }
+    
 attackRollBtn.addEventListener('click', attackRoll)
+inputStrength.addEventListener('input', calculateBonuses)
 
 
