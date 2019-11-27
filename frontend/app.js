@@ -4,6 +4,8 @@ const state = {
   },
 }
 
+
+
 // TODO: look up why we can't store this fetch in a variable
 fetch('https://backend.rpgattackroll.com/races')
   .then(res => res.json())
@@ -25,14 +27,19 @@ fetch('https://backend.rpgattackroll.com/races')
       raceButton.addEventListener('click', handleRaceClick)
       raceSelections.appendChild(raceButton)
     })
-
+    
+    playerName.textContent = state.races[state.chosenRace].name;
+    racialDex.textContent = state.races[state.chosenRace].strBonus;
+    racialstr.textContent = state.races[state.chosenRace].dexBonus;
+    bonusStrength.textContent = 0;
+    
     attackRollBtn.disabled = false
   })
 
 const playerName = document.querySelector('#playerName');
 const attackRollBtn = document.querySelector('#attackRollBtn');
-const playerStr = document.querySelector('#playerStr');
-const playerDex = document.querySelector('#playerDex');
+const racialstr = document.querySelector('#racialStr');
+const racialDex = document.querySelector('#racialDex');
 const rollResult = document.querySelector('#rollResult');
 const raceSelections = document.querySelector('#raceSelections');
 const inputStrength = document.querySelector('.input-strength');
@@ -40,7 +47,6 @@ const bonusStrength = document.querySelector('#bonusStr');
 const totalResult = document.querySelector('#totalResult');
 let dice;
 
-playerName.textContent = "HUMAN";
 
 function slugify(str) {
   return str.toLowerCase().replace(' ', '-')
@@ -79,7 +85,7 @@ raceSelections.addEventListener('click', function(e) {
     return  
   } else {
     playerName.textContent = e.target.parentElement.classList[1]
-    playerStr.textContent = state.races[state.chosenRace].strBonus
+    racialDex.textContent = state.races[state.chosenRace].strBonus
     playerDex.textContent = state.races[state.chosenRace].dexBonus
     }
   })
@@ -89,14 +95,18 @@ raceSelections.addEventListener('click', function(e) {
     state.playerData.str = parseInt(inputStrength.value)
     const strengthBonus = Math.floor( 
       (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
-      if(strengthBonus <= 0  || strengthBonus === NaN) {
+      if(strengthBonus <= 0) {
+        bonusStrength.textContent = 0;
+        attackRollBtn.disabled = false
+      } else if (Number.isInteger(strengthBonus) === false){
+        console.log('working')
+        attackRollBtn.disabled = true;
         bonusStrength.textContent = 0;
       } else {
         bonusStrength.textContent = strengthBonus 
+        attackRollBtn.disabled = false;
       }
     }
     
 attackRollBtn.addEventListener('click', attackRoll)
 inputStrength.addEventListener('input', calculateBonuses)
-
-
