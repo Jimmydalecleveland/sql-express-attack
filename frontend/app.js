@@ -4,8 +4,10 @@ const state = {
   },
 }
 
+
+
 // TODO: look up why we can't store this fetch in a variable
-fetch('https://www.rpgattackroll.com/races')
+fetch('https://backend.rpgattackroll.com/races')
   .then(res => res.json())
   .then(raceJson => {
     state.chosenRace = raceJson[0].id
@@ -25,17 +27,26 @@ fetch('https://www.rpgattackroll.com/races')
       raceButton.addEventListener('click', handleRaceClick)
       raceSelections.appendChild(raceButton)
     })
-
+    
+    playerName.textContent = state.races[state.chosenRace].name;
+    racialStr.textContent = state.races[state.chosenRace].strBonus;
+    racialDex.textContent = state.races[state.chosenRace].dexBonus;
+    bonusStrength.textContent = 0;
+    
     attackRollBtn.disabled = false
   })
 
+// Store DOM elements
 const playerName = document.querySelector('#playerName');
 const attackRollBtn = document.querySelector('#attackRollBtn');
-const playerStr = document.querySelector('#playerStr');
-const playerDex = document.querySelector('#playerDex');
+const racialStr = document.querySelector('#racialStr');
+const racialDex = document.querySelector('#racialDex');
 const rollResult = document.querySelector('#rollResult');
 const raceSelections = document.querySelector('#raceSelections');
-playerName.textContent = "HUMAN";
+const inputStrength = document.querySelector('.input-strength');
+const bonusStrength = document.querySelector('#bonusStr');
+const totalResult = document.querySelector('#totalResult');
+
 
 function slugify(str) {
   return str.toLowerCase().replace(' ', '-')
@@ -59,11 +70,12 @@ function diceRoll() {
 // Displaying the dice roll to the DOM
 function attackRoll() {
   if (state.races === 'undefined') return
-  const strBonus = Math.floor(
-    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2
-  )
-  // rollResult.textContent = diceRoll() + strBonus;
-  rollResult.textContent = diceRoll() + strBonus
+  const strengthBonus = Math.floor(
+    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)  
+
+  const diceRollResult = diceRoll()
+  rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `;
+  totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult + strengthBonus}</h3>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -71,12 +83,27 @@ raceSelections.addEventListener('click', function(e) {
     return  
   } else {
     playerName.textContent = e.target.parentElement.classList[1]
-    playerStr.textContent = state.races[state.chosenRace].strBonus
-    playerDex.textContent = state.races[state.chosenRace].dexBonus
+    racialStr.textContent = state.races[state.chosenRace].strBonus
+    racialDex.textContent = state.races[state.chosenRace].dexBonus
     }
   })
   
-
+  
+  function calculateBonuses() {
+    state.playerData.str = parseInt(inputStrength.value)
+    const strengthBonus = Math.floor( 
+      (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
+      if(strengthBonus <= 0) {
+        bonusStrength.textContent = 0;
+        attackRollBtn.disabled = false
+      } else if (Number.isInteger(strengthBonus) === false){
+        attackRollBtn.disabled = true;
+        bonusStrength.textContent = 0;
+      } else {
+        bonusStrength.textContent = strengthBonus 
+        attackRollBtn.disabled = false;
+      }
+    }
+    
 attackRollBtn.addEventListener('click', attackRoll)
-
-
+inputStrength.addEventListener('input', calculateBonuses)

@@ -1,10 +1,10 @@
-function createOptions(weaponName, weaponGroup) {
+function createOptions(weaponName, weaponGroup, weaponDamage) {
   const weaponOption = document.createElement('option');
-  weaponOption.innerHTML = `<option>${weaponName}</option>`;
+  weaponOption.innerHTML = `<option>${weaponName} ${weaponDamage}</option>`;
   weaponSelect.appendChild(weaponGroup).appendChild(weaponOption);
 }
 
-fetch('https://www.rpgattackroll.com/weapons')
+fetch('https://backend.rpgattackroll.com/weapons')
   .then(res => res.json())
   .then(weapons => {
     // Create option groups for each weapon type
@@ -22,13 +22,13 @@ fetch('https://www.rpgattackroll.com/weapons')
 
     weapons.forEach(weapon => {
       if (weapon.weaponGroup === 'Simple Melee Weapons') {
-        createOptions(weapon.name, simpleMeleeWeaponsGroup);
+        createOptions(weapon.name, simpleMeleeWeaponsGroup, weapon.damage);
       } else if (weapon.weaponGroup === 'Simple Ranged Weapons') {
-        createOptions(weapon.name, simpleRangedWeaponsGroup);
+        createOptions(weapon.name, simpleRangedWeaponsGroup, weapon.damage);
       } else if (weapon.weaponGroup === 'Martial Melee Weapons') {
-        createOptions(weapon.name, martialMeleeWeaponsGroup);
+        createOptions(weapon.name, martialMeleeWeaponsGroup, weapon.damage);
       } else if (weapon.weaponGroup === 'Martial Ranged Weapons') {
-        createOptions(weapon.name, martialRangedWeaponsGroup);
+        createOptions(weapon.name, martialRangedWeaponsGroup, weapon.damage);
       }
     });
   });
