@@ -1,6 +1,6 @@
 const state = {
   playerData: {
-    str: 17
+    str: 17,
   },
 }
 
@@ -29,23 +29,23 @@ fetch('https://backend.rpgattackroll.com/races')
     })
     
     playerName.textContent = state.races[state.chosenRace].name;
-    racialDex.textContent = state.races[state.chosenRace].strBonus;
-    racialstr.textContent = state.races[state.chosenRace].dexBonus;
+    racialStr.textContent = state.races[state.chosenRace].strBonus;
+    racialDex.textContent = state.races[state.chosenRace].dexBonus;
     bonusStrength.textContent = 0;
     
     attackRollBtn.disabled = false
   })
 
+// Store DOM elements
 const playerName = document.querySelector('#playerName');
 const attackRollBtn = document.querySelector('#attackRollBtn');
-const racialstr = document.querySelector('#racialStr');
+const racialStr = document.querySelector('#racialStr');
 const racialDex = document.querySelector('#racialDex');
 const rollResult = document.querySelector('#rollResult');
 const raceSelections = document.querySelector('#raceSelections');
 const inputStrength = document.querySelector('.input-strength');
 const bonusStrength = document.querySelector('#bonusStr');
 const totalResult = document.querySelector('#totalResult');
-let dice;
 
 
 function slugify(str) {
@@ -64,20 +64,18 @@ attackRollBtn.disabled = true
 
 // we need our dice to roll a number between 1-20;
 function diceRoll() {
-  return dice = Math.floor(Math.random() * 20) + 1
+  return Math.floor(Math.random() * 20) + 1
 }
 
 // Displaying the dice roll to the DOM
 function attackRoll() {
   if (state.races === 'undefined') return
-  let strengthBonus = Math.floor(
+  const strengthBonus = Math.floor(
     (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)  
-    if(strengthBonus < 0) {
-      strengthBonus = 0;
-    }
-    diceRoll()
-  rollResult.innerHTML = `<h3>Roll: ${dice}</h3> `;
-  totalResult.innerHTML = `<h3>Total Roll: ${dice + strengthBonus}</h3>`
+
+  const diceRollResult = diceRoll()
+  rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `;
+  totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult + strengthBonus}</h3>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -85,8 +83,8 @@ raceSelections.addEventListener('click', function(e) {
     return  
   } else {
     playerName.textContent = e.target.parentElement.classList[1]
-    racialDex.textContent = state.races[state.chosenRace].strBonus
-    playerDex.textContent = state.races[state.chosenRace].dexBonus
+    racialStr.textContent = state.races[state.chosenRace].strBonus
+    racialDex.textContent = state.races[state.chosenRace].dexBonus
     }
   })
   
