@@ -1,3 +1,5 @@
+import loadWeapons from './weapon'
+
 const state = {
   playerData: {
     str: 17,
@@ -27,12 +29,12 @@ fetch('https://backend.rpgattackroll.com/races')
       raceButton.addEventListener('click', handleRaceClick)
       raceSelections.appendChild(raceButton)
     })
-    
+
     playerName.textContent = state.races[state.chosenRace].name;
     racialStr.textContent = state.races[state.chosenRace].strBonus;
     racialDex.textContent = state.races[state.chosenRace].dexBonus;
     bonusStrength.textContent = 0;
-    
+
     attackRollBtn.disabled = false
   })
 
@@ -71,39 +73,41 @@ function diceRoll() {
 function attackRoll() {
   if (state.races === 'undefined') return
   const strengthBonus = Math.floor(
-    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)  
+    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
 
   const diceRollResult = diceRoll()
   rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `;
   totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult + strengthBonus}</h3>`
 }
 
-raceSelections.addEventListener('click', function(e) {
-  if(e.target.classList.contains('race-button-group') || e.target.classList.contains('race-button')) {
-    return  
+raceSelections.addEventListener('click', function (e) {
+  if (e.target.classList.contains('race-button-group') || e.target.classList.contains('race-button')) {
+    return
   } else {
     playerName.textContent = e.target.parentElement.classList[1]
     racialStr.textContent = state.races[state.chosenRace].strBonus
     racialDex.textContent = state.races[state.chosenRace].dexBonus
-    }
-  })
-  
-  
-  function calculateBonuses() {
-    state.playerData.str = parseInt(inputStrength.value)
-    const strengthBonus = Math.floor( 
-      (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
-      if(strengthBonus <= 0) {
-        bonusStrength.textContent = 0;
-        attackRollBtn.disabled = false
-      } else if (Number.isInteger(strengthBonus) === false){
-        attackRollBtn.disabled = true;
-        bonusStrength.textContent = 0;
-      } else {
-        bonusStrength.textContent = strengthBonus 
-        attackRollBtn.disabled = false;
-      }
-    }
-    
+  }
+})
+
+
+function calculateBonuses() {
+  state.playerData.str = parseInt(inputStrength.value)
+  const strengthBonus = Math.floor(
+    (state.playerData.str + state.races[state.chosenRace].strBonus - 10) / 2)
+  if (strengthBonus <= 0) {
+    bonusStrength.textContent = 0;
+    attackRollBtn.disabled = false
+  } else if (Number.isInteger(strengthBonus) === false) {
+    attackRollBtn.disabled = true;
+    bonusStrength.textContent = 0;
+  } else {
+    bonusStrength.textContent = strengthBonus
+    attackRollBtn.disabled = false;
+  }
+}
+
 attackRollBtn.addEventListener('click', attackRoll)
 inputStrength.addEventListener('input', calculateBonuses)
+
+loadWeapons()
