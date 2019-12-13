@@ -35,13 +35,12 @@ export default function loadWeapons() {
           createOptions(weapon.name, martialRangedWeaponsGroup, weapon.damage)
         }
       })
-      state.howManyRolls = 1
-      state.howManytoRoll = 4
-      randomDiceRoll(state.howManytoRoll)
+      state.rolls = 1
+      state.dieNumber = 4
+      randomDiceRoll(state.rolls)
       return state.weapon
     })
 
     const weaponSelect = document.querySelector('#weapon-select')
 
 }
-

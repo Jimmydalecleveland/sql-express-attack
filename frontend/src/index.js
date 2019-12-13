@@ -108,14 +108,14 @@ function calculateBonuses() {
 }
 
 function weaponR() {
-  if(!state.result && !state.result1) return
-  if(state.howManyRolls === 1) {
-    randomDiceRoll(state.howManytoRoll)
-    weaponResult.innerHTML = `<h3>WeaponRoll: ${state.result}</h3>`
-  } else if (state.howManyRolls === 2 ){
-    randomDiceRoll(state.howManytoRoll)
-    randomdiceRoll2(state.howManytoRoll)
-    weaponResult.innerHTML = `<h3>WeaponRoll1: ${state.result} WeaponRoll2: ${state.result1} `
+  if(!state.weaponRollResult && !state.weaponResult2) return
+  if(state.rolls === 1) {
+    randomDiceRoll(state.dieNumber)
+    weaponResult.innerHTML = `<h3>WeaponRoll: ${state.weaponRollResult}</h3>`
+  } else if (state.rolls === 2 ){
+    randomDiceRoll(state.dieNumber)
+    randomdiceRoll2(state.dieNumber)
+    weaponResult.innerHTML = `<h3>WeaponRoll1: ${state.weaponRollResult} WeaponRoll2: ${state.weaponResult2} `
   }
 }
 
@@ -125,36 +125,36 @@ inputStrength.addEventListener('input', calculateBonuses)
 weaponSelect.addEventListener('change', handleOptionSelect);
 
 export default function randomDiceRoll(number) {
-  state.result = Math.floor(Math.random() * number) + 1
-  return state.result
+  state.weaponRollResult = Math.floor(Math.random() * number) + 1
+  return state.weaponRollResult
 }
 
 function randomdiceRoll2(number) {
-  state.result1 = Math.floor(Math.random() * number) + 1
-  return state.result1
+  state.weaponResult2 = Math.floor(Math.random() * number) + 1
+  return state.weaponResult2
 }
+// Option Select State Function
+
 function handleOptionSelect() {
  const sidedDie = this.value.split('');
 
   if(sidedDie[sidedDie.length - 1] === '2' || sidedDie[sidedDie.length -1] === '0') {
-    state.howManyRolls = parseInt(sidedDie[sidedDie.length - 4])
-    state.howManytoRoll = sidedDie[sidedDie.length - 2] + sidedDie[sidedDie.length - 1]
-    state.howManytoRoll = parseInt(state.howManytoRoll)  
+    state.rolls = parseInt(sidedDie[sidedDie.length - 4])
+    state.dieNumber = sidedDie[sidedDie.length - 2] + sidedDie[sidedDie.length - 1]
+    state.dieNumber = parseInt(state.dieNumber)  
   } else {
-    state.howManytoRoll = parseInt(sidedDie[sidedDie.length - 1]); 
-    state.howManyRolls = parseInt(sidedDie[sidedDie.length - 3]);
+    state.dieNumber = parseInt(sidedDie[sidedDie.length - 1]); 
+    state.rolls = parseInt(sidedDie[sidedDie.length - 3]);
   };
 
- 
- if(state.howManyRolls === 1) {
-  randomDiceRoll(state.howManytoRoll); 
+ if(state.rolls === 1) {
+  randomDiceRoll(state.dieNumber); 
  }
- 
- if(state.howManyRolls === 2) {
-   randomDiceRoll(state.howManytoRoll);
-   randomdiceRoll2(state.howManytoRoll)
+
+ if(state.rolls === 2) {
+   randomDiceRoll(state.dieNumber);
+   randomdiceRoll2(state.dieNumber)
  }
 }
-
 
 loadWeapons()
