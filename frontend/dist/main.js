@@ -90,11 +90,12 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return randomDiceRoll; });
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/state.js");
 /* harmony import */ var _weapon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./weapon */ "./src/weapon.js");
 
@@ -134,12 +135,12 @@ const playerName = document.querySelector('#playerName');
 const attackRollBtn = document.querySelector('#attackRollBtn');
 const racialStr = document.querySelector('#racialStr');
 const racialDex = document.querySelector('#racialDex');
-const rollResult = document.querySelector('#rollResult');
+const rollResult = document.querySelector('.roll-result');
 const raceSelections = document.querySelector('#raceSelections');
 const inputStrength = document.querySelector('.input-strength');
 const bonusStrength = document.querySelector('#bonusStr');
-const totalResult = document.querySelector('#totalResult');
-let weaponResult = document.querySelector('#weaponResult');
+const totalResult = document.querySelector('.total-result');
+let weaponResult = document.querySelector('.weapon-result');
 const weaponSelect = document.querySelector('#weapon-select')
 
 
@@ -171,9 +172,9 @@ function attackRoll() {
   )
 
   const diceRollResult = diceRoll()
-  rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `
-  totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult +
-    strengthBonus}</h3>`
+  rollResult.innerHTML = `Roll: <span>${diceRollResult}</span>`
+  totalResult.innerHTML = `Total Roll: <span>${diceRollResult +
+    strengthBonus}</span>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -207,14 +208,14 @@ function calculateBonuses() {
 }
 
 function weaponR() {
-  if(!_state__WEBPACK_IMPORTED_MODULE_0__["default"].result && !_state__WEBPACK_IMPORTED_MODULE_0__["default"].result1) return
-  if(!_state__WEBPACK_IMPORTED_MODULE_0__["default"].result1) {
-    randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
-    weaponResult.innerHTML = `<h3>WeaponRoll: ${_state__WEBPACK_IMPORTED_MODULE_0__["default"].result}</h3>`
-  } else {
-    randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
-    randomdiceRoll2(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
-    weaponResult.innerHTML = `<h3>WeaponRoll1: ${_state__WEBPACK_IMPORTED_MODULE_0__["default"].result} WeaponRoll2: ${_state__WEBPACK_IMPORTED_MODULE_0__["default"].result1} `
+  if(!_state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponRollResult && !_state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponResult2) return
+  if(_state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls === 1) {
+    randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber)
+    weaponResult.innerHTML = `WeaponRoll: <span>${_state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponRollResult}</span>`
+  } else if (_state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls === 2 ){
+    randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber)
+    randomdiceRoll2(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber)
+    weaponResult.innerHTML = `WeaponRoll: <span>${_state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponRollResult}</span> WeaponRoll2: <span>${_state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponResult2}</span>`
   }
 }
 
@@ -224,34 +225,40 @@ inputStrength.addEventListener('input', calculateBonuses)
 weaponSelect.addEventListener('change', handleOptionSelect);
 
 function randomDiceRoll(number) {
-  _state__WEBPACK_IMPORTED_MODULE_0__["default"].result = Math.floor(Math.random() * number) + 1
-  return _state__WEBPACK_IMPORTED_MODULE_0__["default"].result
+  _state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponRollResult = Math.floor(Math.random() * number) + 1
+  return _state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponRollResult
 }
 
 function randomdiceRoll2(number) {
-  _state__WEBPACK_IMPORTED_MODULE_0__["default"].result1 = Math.floor(Math.random() * number) + 1
-  console.log(_state__WEBPACK_IMPORTED_MODULE_0__["default"].result)
-  return _state__WEBPACK_IMPORTED_MODULE_0__["default"].result1
+  _state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponResult2 = Math.floor(Math.random() * number) + 1
+  return _state__WEBPACK_IMPORTED_MODULE_0__["default"].weaponResult2
 }
+// Option Select State Function
+
 function handleOptionSelect() {
  const sidedDie = this.value.split('');
-  _state__WEBPACK_IMPORTED_MODULE_0__["default"].howManytoRoll = parseInt(sidedDie[sidedDie.length - 1]); 
-  _state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyRolls = parseInt(sidedDie[sidedDie.length - 3]);
-  console.log(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
- 
- if(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyRolls === 1) {
-  console.log(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
-  randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll); 
+
+  if(sidedDie[sidedDie.length - 1] === '2' || sidedDie[sidedDie.length -1] === '0') {
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls = parseInt(sidedDie[sidedDie.length - 4])
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber = sidedDie[sidedDie.length - 2] + sidedDie[sidedDie.length - 1]
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber = parseInt(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber)  
+  } else {
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber = parseInt(sidedDie[sidedDie.length - 1]); 
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls = parseInt(sidedDie[sidedDie.length - 3]);
+  };
+
+ if(_state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls === 1) {
+  randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber); 
  }
- 
- if(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyRolls === 2) {
-   randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll);
-   randomdiceRoll2(_state__WEBPACK_IMPORTED_MODULE_0__["default"].howManyToRoll)
+
+ if(_state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls === 2) {
+   randomDiceRoll(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber);
+   randomdiceRoll2(_state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber)
  }
 }
 
-
 Object(_weapon__WEBPACK_IMPORTED_MODULE_1__["default"])()
+
 
 /***/ }),
 
@@ -285,6 +292,8 @@ const state = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return loadWeapons; });
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/state.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./src/index.js");
+
 
 
 function loadWeapons() {
@@ -321,13 +330,15 @@ function loadWeapons() {
           createOptions(weapon.name, martialRangedWeaponsGroup, weapon.damage)
         }
       })
+      _state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls = 1
+      _state__WEBPACK_IMPORTED_MODULE_0__["default"].dieNumber = 4
+      Object(_index__WEBPACK_IMPORTED_MODULE_1__["default"])(_state__WEBPACK_IMPORTED_MODULE_0__["default"].rolls)
       return _state__WEBPACK_IMPORTED_MODULE_0__["default"].weapon
     })
 
     const weaponSelect = document.querySelector('#weapon-select')
 
 }
-
 
 
 /***/ })

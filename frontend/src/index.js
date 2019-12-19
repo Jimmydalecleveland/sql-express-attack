@@ -35,14 +35,13 @@ const playerName = document.querySelector('#playerName');
 const attackRollBtn = document.querySelector('#attackRollBtn');
 const racialStr = document.querySelector('#racialStr');
 const racialDex = document.querySelector('#racialDex');
-const rollResult = document.querySelector('#rollResult');
+const rollResult = document.querySelector('.roll-result');
 const raceSelections = document.querySelector('#raceSelections');
 const inputStrength = document.querySelector('.input-strength');
 const bonusStrength = document.querySelector('#bonusStr');
-const totalResult = document.querySelector('#totalResult');
-let weaponResult = document.querySelector('#weaponResult');
+const totalResult = document.querySelector('.total-result');
+let weaponResult = document.querySelector('.weapon-result');
 const weaponSelect = document.querySelector('#weapon-select')
-
 
 
 function slugify(str) {
@@ -72,9 +71,9 @@ function attackRoll() {
   )
 
   const diceRollResult = diceRoll()
-  rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `
-  totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult +
-    strengthBonus}</h3>`
+  rollResult.innerHTML = `Roll: <span>${diceRollResult}</span>`
+  totalResult.innerHTML = `Total Roll: <span>${diceRollResult +
+    strengthBonus}</span>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -111,11 +110,11 @@ function weaponR() {
   if(!state.weaponRollResult && !state.weaponResult2) return
   if(state.rolls === 1) {
     randomDiceRoll(state.dieNumber)
-    weaponResult.innerHTML = `<h3>WeaponRoll: ${state.weaponRollResult}</h3>`
+    weaponResult.innerHTML = `WeaponRoll: <span>${state.weaponRollResult}</span>`
   } else if (state.rolls === 2 ){
     randomDiceRoll(state.dieNumber)
     randomdiceRoll2(state.dieNumber)
-    weaponResult.innerHTML = `<h3>WeaponRoll1: ${state.weaponRollResult} WeaponRoll2: ${state.weaponResult2} `
+    weaponResult.innerHTML = `WeaponRoll: <span>${state.weaponRollResult}</span> WeaponRoll2: <span>${state.weaponResult2}</span>`
   }
 }
 
