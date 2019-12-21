@@ -1,40 +1,82 @@
-const express = require('express');
-const cors = require('cors');
-const db = require('./db');
+const fs = require("fs");
+const express = require("express");
+const https = require("https");
+const http = require("http");
+const cors = require("cors");
+const db = require("./db");
 const app = express();
-const port = process.env.NODE_ENV === 'development' ? 3000 : 80;
-app.use(express.urlencoded())
+const port = process.env.NODE_ENV === "development" ? 3000 : 443;
 
-// DEPLOY TEST
+const key = fs.readFileSync(
+  "/etc/letsencrypt/live/backend.rpgattackroll.com/privkey.pem",
+  "utf8"
+);
+const cert = fs.readFileSync(
+  "/etc/letsencrypt/live/backend.rpgattackroll.com/fullchain.pem",
+  "utf8"
+);
+
+app.use(express.urlencoded());
+
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Welcome to attack roll. Hit the /races endpoint for some data');
+app.get("*", (req, res, next) => {
+  // TODO: try secure
+  // if(!req.secure){
+  if (req.protocol === "http") {
+    res.redirect(301, "https://" + req.headers.host + req.url);
+  }
+
+  next();
 });
 
-app.get('/races', (req, res) => {
-  db.query('SELECT * FROM race', (error, results, fields) => {
+app.get("/", (req, res) => {
+  res.send(
+    "Welcome to the secure attack roll. Hit the /races endpoint for some data. It will be neat, maybe."
+  );
+});
+
+app.get("/races", (req, res) => {
+  db.query("SELECT * FROM race", (error, results, fields) => {
     if (error) throw error;
 
     res.json(results);
   });
 });
 
-
-app.get('/weapons', (req, res) => {
-  db.query('SELECT * FROM weapon', (error, results, fields) => {
+app.get("/races/human", (req, res) => {
+  db.query("SELECT * FROM race", (error, results, fields) => {
     if (error) throw error;
 
     res.json(results);
   });
 });
 
-app.post('/create-race', (req, res) => {
+app.post("/races", (req, res) => {
+  db.query(
+    'INSERT INTO race (id, name, strBonus, dexBonus) VALUES (null, "hill dwarf", 2, 0);',
+    (error, results, fields) => {
+      if (error) throw error;
+
+      res.json(resuts);
+    }
+  );
+});
+
+app.get("/weapons", (req, res) => {
+  db.query("SELECT * FROM weapon", (error, results, fields) => {
+    if (error) throw error;
+
+    res.json(results);
+  });
+});
+
+app.post("/create-race", (req, res) => {
   const race = req.body.race;
   const strBonus = req.body.strBonus;
   const dexBonus = req.body.dexBonus;
   let races = `INSERT INTO race (id, name, strBonus, dexBonus) Values(null , ?, ?, ?)`;
-  
+
   db.query(races, [race, strBonus, dexBonus], (err, rows, fields) => {
     if (err) throw err;
 
@@ -42,15 +84,15 @@ app.post('/create-race', (req, res) => {
   });
 });
 
-
-app.delete('/delete-race/:id', (req, res) => {
-  db.query('DELETE FROM race WHERE id = ?', req.params.id, (error, rows) => {
+app.delete("/delete-race/:id", (req, res) => {
+  db.query("DELETE FROM race WHERE id = ?", req.params.id, (error, rows) => {
     if (error) throw error;
 
     res.json(rows);
   });
 });
 
-app.listen(port, () =>
-  console.log(`RPG ATTACK ROLL SIMULATOR on port ${port}!`)
-);
+const httpsServer = https.createServer({ key, cert }, app);
+const httpServer = http.createServer(app);
+httpsServer.listen(port);
+httpServer.listen(80);

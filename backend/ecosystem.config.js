@@ -22,7 +22,7 @@ module.exports = {
   deploy: {
     production: {
       user: 'root',
-      host: '165.22.155.59',
+      host: '157.245.230.125',
       key: '~/.ssh/digitalocean',
       ref: 'origin/master',
       repo: 'https://github.com/Jimmydalecleveland/sql-express-attack.git',
@@ -31,4 +31,4 @@ module.exports = {
         'cd backend && npm install && pm2 reload ecosystem.config.js --env production',
     },
   },
-};
+}
