@@ -1,5 +1,7 @@
 import state from './state';
 import loadWeapons from './weapon';
+import './styles/style.scss'
+
 // TODO: look up why we can't store this fetch in a variable
 fetch('https://backend.rpgattackroll.com/races')
   .then((res) => res.json())
