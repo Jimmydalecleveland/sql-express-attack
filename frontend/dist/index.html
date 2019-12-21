@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/mediaqueries.css">
   <title>RPG Attack Roller</title>
 </head>
 
@@ -13,23 +14,37 @@
   <div class="flex-wrap">
     <div class="app-card">
       <h1 id="playerName">Unknown</h1>
-      <h2> Racial STR: <span id="racialStr"></span></h2>
-      <h2>Racial DEX: <span id="racialDex"></span></h2>
-      <h2>Total bonus Str: <span id="bonusStr"></span></h2>
       <div class="race-button-group" id="raceSelections"></div>
+     
+      <div class="grid-container">
+        <div class="card1">
+          <div class="optgroups">
+              <label for='weapon-select'>Weapon:</label>
+              <select name="weapon-select" id="weapon-select"></select>
+          </div>
+          <div class="strength-input">
+              <label>Strength:</label>
+              <input type="text" class="input-strength">
+          </div> 
+        </div>
+        
+        <div class="card2">
+          <p class="roll-result">Roll: <span id="rollResult"></span></p>
+          <p class="total-result">TotalRoll: <span id="totalResult"></span></p>
+          <p class="weapon-result">WeaponRoll: <span id="weaponResult"></span></p>
+        </div>
 
-      <div class="optgroups">
-        <label for='weapon-select'>Weapon Selection</label>
-        <select name="weapon-select" id="weapon-select"></select>
+        <div class="card3">
+          <p class="racial-str"> Racial STR: <span id="racialStr"></span></p>
+          <p class="racial-dex">Racial DEX: <span id="racialDex"></span></p>
+          <p class="bonus-str">Total bonus Str: <span id="bonusStr"></span></p>
+        </div>
+        
+
       </div>
-      <label> Enter your Strength: </label>
-      <input type="text" class="input-strength">
-      <button id="attackRollBtn" disabled>Roll Attack</button>
-      <h3 id="rollResult">Roll: </h3>
-      <h3 id="totalResult">Totalroll: </h3>
+              <button id="attackRollBtn" disabled>Roll Attack</button>
     </div>
   </div>
-
 
   <script src="./main.js"></script>
   <!-- <script src="weapon.js"></script> -->

@@ -1,11 +1,5 @@
-import loadWeapons from './weapon'
-
-const state = {
-  playerData: {
-    str: 17,
-  },
-}
-
+import state from './state';
+import loadWeapons from './weapon';
 // TODO: look up why we can't store this fetch in a variable
 fetch('https://backend.rpgattackroll.com/races')
   .then((res) => res.json())
@@ -37,15 +31,18 @@ fetch('https://backend.rpgattackroll.com/races')
   })
 
 // Store DOM elements
-const playerName = document.querySelector('#playerName')
-const attackRollBtn = document.querySelector('#attackRollBtn')
-const racialStr = document.querySelector('#racialStr')
-const racialDex = document.querySelector('#racialDex')
-const rollResult = document.querySelector('#rollResult')
-const raceSelections = document.querySelector('#raceSelections')
-const inputStrength = document.querySelector('.input-strength')
-const bonusStrength = document.querySelector('#bonusStr')
-const totalResult = document.querySelector('#totalResult')
+const playerName = document.querySelector('#playerName');
+const attackRollBtn = document.querySelector('#attackRollBtn');
+const racialStr = document.querySelector('#racialStr');
+const racialDex = document.querySelector('#racialDex');
+const rollResult = document.querySelector('.roll-result');
+const raceSelections = document.querySelector('#raceSelections');
+const inputStrength = document.querySelector('.input-strength');
+const bonusStrength = document.querySelector('#bonusStr');
+const totalResult = document.querySelector('.total-result');
+let weaponResult = document.querySelector('.weapon-result');
+const weaponSelect = document.querySelector('#weapon-select')
+
 
 function slugify(str) {
   return str.toLowerCase().replace(' ', '-')
@@ -74,9 +71,9 @@ function attackRoll() {
   )
 
   const diceRollResult = diceRoll()
-  rollResult.innerHTML = `<h3>Roll: ${diceRollResult}</h3> `
-  totalResult.innerHTML = `<h3>Total Roll: ${diceRollResult +
-    strengthBonus}</h3>`
+  rollResult.innerHTML = `Roll: <span>${diceRollResult}</span>`
+  totalResult.innerHTML = `Total Roll: <span>${diceRollResult +
+    strengthBonus}</span>`
 }
 
 raceSelections.addEventListener('click', function(e) {
@@ -109,7 +106,54 @@ function calculateBonuses() {
   }
 }
 
+function weaponR() {
+  if(!state.weaponRollResult && !state.weaponResult2) return
+  if(state.rolls === 1) {
+    randomDiceRoll(state.dieNumber)
+    weaponResult.innerHTML = `WeaponRoll: <span>${state.weaponRollResult}</span>`
+  } else if (state.rolls === 2 ){
+    randomDiceRoll(state.dieNumber)
+    randomdiceRoll2(state.dieNumber)
+    weaponResult.innerHTML = `WeaponRoll: <span>${state.weaponRollResult}</span> WeaponRoll2: <span>${state.weaponResult2}</span>`
+  }
+}
+
 attackRollBtn.addEventListener('click', attackRoll)
+attackRollBtn.addEventListener('click', weaponR)
 inputStrength.addEventListener('input', calculateBonuses)
+weaponSelect.addEventListener('change', handleOptionSelect);
+
+export default function randomDiceRoll(number) {
+  state.weaponRollResult = Math.floor(Math.random() * number) + 1
+  return state.weaponRollResult
+}
+
+function randomdiceRoll2(number) {
+  state.weaponResult2 = Math.floor(Math.random() * number) + 1
+  return state.weaponResult2
+}
+// Option Select State Function
+
+function handleOptionSelect() {
+ const sidedDie = this.value.split('');
+
+  if(sidedDie[sidedDie.length - 1] === '2' || sidedDie[sidedDie.length -1] === '0') {
+    state.rolls = parseInt(sidedDie[sidedDie.length - 4])
+    state.dieNumber = sidedDie[sidedDie.length - 2] + sidedDie[sidedDie.length - 1]
+    state.dieNumber = parseInt(state.dieNumber)  
+  } else {
+    state.dieNumber = parseInt(sidedDie[sidedDie.length - 1]); 
+    state.rolls = parseInt(sidedDie[sidedDie.length - 3]);
+  };
+
+ if(state.rolls === 1) {
+  randomDiceRoll(state.dieNumber); 
+ }
+
+ if(state.rolls === 2) {
+   randomDiceRoll(state.dieNumber);
+   randomdiceRoll2(state.dieNumber)
+ }
+}
 
 loadWeapons()
