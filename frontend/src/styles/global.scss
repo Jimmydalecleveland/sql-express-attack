@@ -1,0 +1,21 @@
+body {
+  background-color: #fffaf7;
+  font-family: Helvetica, sans-serif
+}
+
+.input {
+  label {
+    display: block;
+    margin-left: 25px;
+    font-size: 18px;
+    color: #bbb3ae;
+  }
+
+  input {
+    padding: 10px 15px 10px 25px;
+    border: solid 1px #bbb3ae;
+    color: #47403c;
+    font-size: 28px;
+    border-radius: 30px;
+  }
+}

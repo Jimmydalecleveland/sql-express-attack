@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RPG Attack Roller</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>RPG Attack Roller</title>
-</head>
+  <body>
+    <div class="container">
+      <div class="container__form">
+        <div class="race-button-group" id="raceSelections"></div>
 
-<body>
-  <div class="flex-wrap">
-    <div class="app-card">
-      <h1 id="playerName">Unknown</h1>
-      <div class="race-button-group" id="raceSelections"></div>
-     
+        <div class="input">
+          <label>Strength:</label>
+          <input type="text" id="inputStr" />
+        </div>
+        <!-- Takes up remaining space -->
+        <div class="spacer"></div>
+
+        <button id="attackRollBtn" class="primary-button" disabled>
+          Roll Attack
+        </button>
+      </div>
+      <div class="container__result">
+        <p class="roll-result">Roll: <span id="rollResult"></span></p>
+        <p class="total-result">TotalRoll: <span id="totalResult"></span></p>
+        <p class="weapon-result">
+          WeaponRoll: <span id="weaponResult"></span>
+        </p>
+      </div>
+      <!-- <h1 id="playerName">Unknown</h1>
+
       <div class="grid-container">
         <div class="card1">
           <div class="optgroups">
-              <label for='weapon-select'>Weapon:</label>
-              <select name="weapon-select" id="weapon-select"></select>
+            <label for="weapon-select">Weapon:</label>
+            <select name="weapon-select" id="weapon-select"></select>
           </div>
-          <div class="strength-input">
-              <label>Strength:</label>
-              <input type="text" class="input-strength">
-          </div> 
         </div>
-        
+
         <div class="card2">
-          <p class="roll-result">Roll: <span id="rollResult"></span></p>
-          <p class="total-result">TotalRoll: <span id="totalResult"></span></p>
-          <p class="weapon-result">WeaponRoll: <span id="weaponResult"></span></p>
         </div>
 
         <div class="card3">
-          <p class="racial-str"> Racial STR: <span id="racialStr"></span></p>
+          <p class="racial-str">Racial STR: <span id="racialStr"></span></p>
           <p class="racial-dex">Racial DEX: <span id="racialDex"></span></p>
           <p class="bonus-str">Total bonus Str: <span id="bonusStr"></span></p>
         </div>
-        
-
-      </div>
-              <button id="attackRollBtn" disabled>Roll Attack</button>
+      </div> -->
     </div>
-  </div>
 
-  <script src="./main.js"></script>
-  <!-- <script src="weapon.js"></script> -->
-</body>
-
+    <script src="./main.js"></script>
+    <!-- <script src="weapon.js"></script> -->
+  </body>
 </html>

@@ -1,0 +1,51 @@
+.container {
+  margin: 60px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  width: 90%;
+  background-color: white;
+  min-height: 800px; // DELETE ME
+  box-shadow: 0 4px 20px 10px #e1d8d3;
+
+  @media screen and (min-width: 600px) {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 100px 20px 50px;
+
+    .input {
+      margin: 30px auto;
+    }
+
+    .spacer {
+      flex: 1;
+    }
+  }
+
+  &__result {
+    background: linear-gradient(45deg,#ffd48e, #ff70d7);
+    color: white;
+  }
+}
+
+.race-button-group {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    border-radius: 50%;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+}
